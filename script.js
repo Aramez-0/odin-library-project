@@ -1,3 +1,8 @@
+let container = document.querySelector(".container");
+let openNewBook = document.querySelector(".display-new-book");
+let newBookContainer = document.querySelector("#new-book-container");
+
+
 const myLibrary = []
 
 function Book(title, author, pages, read) {
@@ -5,51 +10,60 @@ function Book(title, author, pages, read) {
     this.author = author;
     this.pages = pages;
     this.read = read;
-    this.info = function() {
-        return `${title} by ${author}, ${pages}, ${read}`;
-    };
 };
 
+
 function addBookToLibrary(title, author, pages, read) {
-    let bookNew = new Book(title, author, pages, read)
-    myLibrary.push(bookNew)
-}
+    let bookNew = new Book(title, author, pages, read);
+    myLibrary.push(bookNew);
+};
 
-addBookToLibrary('mylittlepony', 'authoryes', '165', 'not read')
-addBookToLibrary('title2', 'author2', 'pages2', 'read2')
-addBookToLibrary('title3', 'author3', 'pages3', 'read3')
-
-// not being used, probably useless
-function element(a, b, c, d) {
-    a = document.createElement("p")
-    a.textContent = `${b}: ${c.title}`
-    d.appendChild(a)
-}
 
 function displayLibrary(item) {
-    let div = document.createElement("div")
-    div.setAttribute("class", "book-item")
-    document.querySelector("#container").appendChild(div)
+    let div = document.createElement("div");
+    div.setAttribute("class", "book-item");
+    container.appendChild(div);
 
-    let titleElement = document.createElement("p")
-    titleElement.textContent = `Title: ${item.title}`
-    div.appendChild(titleElement)
+    const fields = [
+        { label: "Title", value: item.title },
+        { label: "Author", value: item.author },
+        { label: "Pages", value: item.pages },
+        { label: "Read", value: item.read }
+    ];
 
-    let authorElement = document.createElement("p")
-    authorElement.textContent = `Author: ${item.author}`
-    div.appendChild(authorElement)
+    fields.forEach(field => {
+        let pElement = document.createElement("p");
+        pElement.textContent = `${field.label}: ${field.value}`;
+        div.appendChild(pElement);
+    });
+};
 
-    let pagesElement = document.createElement("p")
-    pagesElement.textContent = `Pages: ${item.pages}`
-    div.appendChild(pagesElement)
 
-    let readElement = document.createElement("p")
-    readElement.textContent = `Read: ${item.read}`
-    div.appendChild(readElement)
-}
+myLibrary.forEach(item => displayLibrary(item));
 
-console.log(myLibrary)
 
-myLibrary.forEach(item => displayLibrary(item))
+openNewBook.addEventListener("click", () => {
+    newBookContainer.style = "display: block;";
+});
 
- 
+
+// new book section
+
+let bookTitle = document.querySelector("#book-title");
+let bookAuthor = document.querySelector("#book-author");
+let bookPages = document.querySelector("#book-pages");
+let bookStatus = document.querySelector("#book-status");
+let submitBook = document.querySelector("#submit-book");
+
+
+submitBook.addEventListener("click", () => {
+    console.log(bookTitle.value, bookAuthor.value, bookPages.value, bookStatus.value);
+    addBookToLibrary(bookTitle.value, bookAuthor.value, bookPages.value, bookStatus.value);
+    let newBook = myLibrary[myLibrary.length - 1];
+    displayLibrary(newBook);
+    bookAuthor.value = '';
+    bookPages.value = '';
+    bookTitle.value = '';
+    bookStatus.value = 'Reading';
+    newBookContainer.style = "display: none;";
+});
