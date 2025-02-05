@@ -44,7 +44,24 @@ a {
     color: white;
 }
 
-/* new book section */
+.delete-book {
+    margin-left: auto;
+    width: fit-content;
+    position: relative;
+    bottom: 23px;
+}
+
+.edit-book {
+    margin-left: auto;
+    width: fit-content;
+    position: relative;
+    bottom: 72px;
+}
+
+/* 
+ * new book section 
+ * does not display well on mobile
+*/
 
 .content-container {
     display: flex;
@@ -55,6 +72,7 @@ a {
     width: 100%;
     height: 100%;
     max-width: 500px;
+    min-width: none;
     padding: 3px;
 }
 
